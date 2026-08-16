@@ -1,6 +1,6 @@
 {
-  "name": "mdzjs",
-  "version": "1.0.0",
+  "name": "@zikojs/mdx",
+  "version": "0.1.0",
   "description": "markdown preprocessor for zikojs",
   "main": "index.js",
   "type": "module",
@@ -15,10 +15,12 @@
     ".": "./src/index.js",
     "./*": "./src/loaders/*/index.js"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "author": "zakaria elalaoui",
   "keywords": [
     "zikojs",
-    "zikojs-addons",
     "markdown",
     "remark",
     "mdx",
@@ -32,22 +34,22 @@
   },
   "license": "MIT",
   "dependencies": {
-    "acorn": "^8.16.0",
-    "highlight.js": "^11.11.1",
-    "htmlparser2": "^10.1.0",
+    "acorn": "^8.18.0",
+    "highlight.js": "^11.12.0",
+    "htmlparser2": "^12.0.0",
     "remark-frontmatter": "^5.0.0",
     "remark-gfm": "^4.0.1",
     "remark-mdx": "^3.1.1",
     "remark-parse": "^11.0.0",
     "remark-toc": "^9.0.0",
-    "rollup": "^4.59.0",
+    "rollup": "^4.62.4",
     "unified": "^11.0.5",
     "vfile-matter": "^5.0.1",
     "vfile-reporter": "^8.1.1",
-    "ziko": "^1.0.0"
+    "ziko": "^1.8.0"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^29.0.2",
+    "@rollup/plugin-commonjs": "^29.0.3",
     "@rollup/plugin-node-resolve": "^16.0.3",
     "@rollup/plugin-terser": "^1.0.0",
     "cross-env": "^10.1.0"
