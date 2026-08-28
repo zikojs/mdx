@@ -1,0 +1,10 @@
+packages:
+  - "packages/*"
+
+# Define a catalog of version ranges.
+catalog:
+  ziko: ^1.10.0
+  vite: ^8.2.1
+
+minimumReleaseAgeExclude:
+  - ziko@1.10.0
