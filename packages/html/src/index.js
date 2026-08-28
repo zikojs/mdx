@@ -1,7 +1,10 @@
 import { parseDocument } from "htmlparser2";
 
 export function htmlToZikoJS(html) {
-  const document = parseDocument(html);
+  const document = parseDocument(html, {
+    lowerCaseTags: false,
+    xmlMode: true,
+  });
 
   return document.children
     .filter(node => node.type !== "comment")
@@ -77,7 +80,11 @@ function nodeToZikoJS(node) {
 
       args.push(...children);
 
-      return `tags.${tag}(${args.join(", ")})`;
+      const tagName = /^[A-Z]/.test(tag)
+        ? tag
+        : `tags.${tag}`;
+
+      return `${tagName}(${args.join(", ")})`;
     }
 
     default:
@@ -114,19 +121,23 @@ function parseText(value) {
     ? parts[0]
     : parts.join(", ");
 }
+
 const v = htmlToZikoJS(`
 <style>
 </style>
 <script>
   const a = "world";
 </script>
+<Wrapper>
+<Button />
 <div class="card">
   <h1>Hello {a}</h1>
   <p>World</p>
 </div> 
 <script>
   const b = "world";
-</script>   
+</script> 
+<§  
 `)
 
 console.log(v)
