@@ -20,6 +20,9 @@ importers:
 
   packages/html:
     dependencies:
+      htmlparser2:
+        specifier: ^12.0.0
+        version: 12.0.0
       ziko:
         specifier: 'catalog:'
         version: 1.10.0

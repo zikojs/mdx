@@ -1,6 +1,6 @@
 {
   "name": "@zikojs/html",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "",
   "keywords": [
     "zikojs",
@@ -21,16 +21,17 @@
   "publishConfig": {
     "access": "public"
   },
-  "exports":{
-    ".":{
-      "import" : "./src/index.js",
-      "types" : "./src/index.d.ts"
+  "exports": {
+    ".": {
+      "import": "./src/index.js",
+      "types": "./src/index.d.ts"
     }
   },
   "license": "MIT",
   "author": "zakaria elalaoui",
   "type": "module",
   "dependencies": {
+    "htmlparser2": "^12.0.0",
     "ziko": "catalog:"
   },
   "scripts": {
