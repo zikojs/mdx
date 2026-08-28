@@ -3,32 +3,43 @@ import { parseDocument } from "htmlparser2";
 export function htmlToZikoJS(html) {
   const document = parseDocument(html);
 
-  let script = "";
-
-  const nodes = document.children
+  return document.children
     .filter(node => node.type !== "comment")
-    .filter(node => {
-      if (node.type === "script") {
-        script = node.children
-          .filter(child => child.type === "text")
-          .map(child => child.data)
-          .join("");
+    .map(node => {
+      switch (node.type) {
+        case "script":
+          return {
+            type: "script",
+            content: getTextContent(node)
+          };
 
-        return false;
+        case "style":
+          return {
+            type: "style",
+            content: getTextContent(node)
+          };
+
+        default: {
+          const content = nodeToZikoJS(node);
+
+          if (!content) return null;
+
+          return {
+            type: "template",
+            content
+          };
+        }
       }
+    })
+    .filter(Boolean);
+}
 
-      return true;
-    });
-
-  const template = nodes
-    .map(nodeToZikoJS)
-    .filter(Boolean)
-    .join(",\n");
-
-  return {
-    script: script.trim(),
-    template
-  };
+function getTextContent(node) {
+  return node.children
+    .filter(child => child.type === "text")
+    .map(child => child.data)
+    .join("")
+    .trim();
 }
 
 function nodeToZikoJS(node) {
@@ -41,8 +52,7 @@ function nodeToZikoJS(node) {
       return parseText(value);
     }
 
-    case "tag":
-    case "style": {
+    case "tag": {
       const tag = node.name;
 
       const props = Object.entries(node.attribs ?? {})
@@ -69,9 +79,6 @@ function nodeToZikoJS(node) {
 
       return `tags.${tag}(${args.join(", ")})`;
     }
-
-    case "comment":
-      return null;
 
     default:
       return null;
@@ -103,23 +110,23 @@ function parseText(value) {
     parts.push(JSON.stringify(remaining));
   }
 
-  if (parts.length === 1) {
-    return parts[0];
-  }
-
-  return parts.join(", ");
+  return parts.length === 1
+    ? parts[0]
+    : parts.join(", ");
 }
-
-
-
 const v = htmlToZikoJS(`
+<style>
+</style>
 <script>
   const a = "world";
 </script>
 <div class="card">
   <h1>Hello {a}</h1>
   <p>World</p>
-</div>    
+</div> 
+<script>
+  const b = "world";
+</script>   
 `)
 
 console.log(v)
