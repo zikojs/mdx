@@ -5,12 +5,13 @@ packages:
 catalog:
   ziko: ^1.10.0
   vite: ^8.2.1
+  acorn: ^8.18.0
 
 # Wait at least 7 days before installing newly published package versions.
 minimumReleaseAge: 10080
 
-minimumReleaseAgeExclude:
-  - ziko@1.10.0
+# minimumReleaseAgeExclude:
+#   - ziko@1.10.0
 
 # Prevent transitive dependencies from being installed from untrusted sources.
 blockExoticSubdeps: true

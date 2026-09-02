@@ -1,5 +1,15 @@
 import {HtmlToZikoJsIR} from './html-to-ziko-ir/index.js'
 
+export const HtmlToZikoJS = html => {
+    const {tags, data} = HtmlToZikoJsIR(html)
+    const TAGS_IMPORT = `import {${[...tags].join(',')}} from 'ziko/dom';`
+    const SCRIPTS = data.filter(n=>n.type === 'script').map(n=>n.content).join('\n')
+    const UI = `export default function(){
+    ${SCRIPTS}
+    }`
+
+    console.log(TAGS_IMPORT, SCRIPTS)
+}
 
 // const v = HtmlToZikoJsIR(`
 // <style>
@@ -18,6 +28,10 @@ import {HtmlToZikoJsIR} from './html-to-ziko-ir/index.js'
 
 const Alpine = `
 <script>
+ const {
+    title = "test',
+    description
+ } = HTML.Props
  const isOpen = true
 </script>
 <div x-data="{ open: {isOpen} }">
