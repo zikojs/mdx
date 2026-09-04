@@ -5,7 +5,8 @@ import syntaxHighlightAdapter from '@zikojs/mdx-highlightjs-adapter'
 export default defineConfig({
     plugins : [
         MDX({
-            syntaxHighlightAdapter
+            syntaxHighlightAdapter,
+            marker: '.ziko'
         })
     ]
 })
