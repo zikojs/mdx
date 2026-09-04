@@ -1,10 +1,9 @@
 {
-  "name": "@zikojs/vtie-plugin-mdx",
+  "name": "@zikojs/vite-plugin-mdx",
   "version": "0.1.0",
   "description": "Vite plugin for Zikojs MDX support",
   "keywords": [
     "zikojs",
-    "ziko",
     "mdx",
     "vite",
     "preprocessor",

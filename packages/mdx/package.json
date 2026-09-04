@@ -1,6 +1,6 @@
 {
   "name": "@zikojs/mdx",
-  "version": "0.1.0",
+  "version": "0.2.1",
   "description": "markdown preprocessor for zikojs",
   "main": "index.js",
   "type": "module",
@@ -12,8 +12,7 @@
   },
   "types": "./types/index.d.ts",
   "exports": {
-    ".": "./src/index.js",
-    "./*": "./src/loaders/*/index.js"
+    ".": "./src/index.js"
   },
   "publishConfig": {
     "access": "public"
@@ -45,6 +44,7 @@
     "remark-toc": "^9.0.0",
     "rollup": "^4.62.4",
     "unified": "^11.0.5",
+    "vfile": "^6.0.3",
     "vfile-matter": "^5.0.1",
     "vfile-reporter": "^8.1.1",
     "ziko": "catalog:"

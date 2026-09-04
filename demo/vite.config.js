@@ -1,8 +1,8 @@
 import { defineConfig } from "vite";
 // import { MDZ } from "../src/vite/index.js";
 // import ViteMDZ  from "../src/bundlers/vite.js"
-import ViteMDZ from "@zikojs/mdx/vite"
+import MDX from "@zikojs/vite-plugin-mdx"
 
 export default defineConfig({
-    plugins : [ViteMDZ()]
+    plugins : [MDX()]
 })

@@ -1,4 +1,4 @@
-import {Flex, tags, text} from "ziko"
+import {tags, text} from "ziko/dom"
 export default ({data , color = 'red'})=>{
     let txt = tags.span(data).style({color})
     // let inp = tags.input(data).style({
@@ -9,10 +9,12 @@ export default ({data , color = 'red'})=>{
     //     fontSize : "inherit"
     // })
     // inp.onInput(e=>txt.setValue(e.value))
-    return Flex(
+    return tags.div(
         // inp,
         txt
-    ).vertical(0, "space-around").size("60%").style({
+    ).style({
+        display : 'flex',
+        flexDirection : 'column',
         border : "2px darkblue solid",
         padding : "10px",
         minHeight : "100px",
