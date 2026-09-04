@@ -2,9 +2,9 @@ import {tags} from 'ziko/dom'
 import UI from './test.mdx'
 import { ScrollArea } from 'zextra/containers'
 
-import hljs from "highlight.js"
+// import hljs from "highlight.js"
 import 'highlight.js/styles/github.css';
-hljs.highlightAll()
+// hljs.highlightAll()
 
 globalThis.items = UI({name : "from MDZjs"})
 

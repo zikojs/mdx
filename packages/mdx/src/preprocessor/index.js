@@ -4,7 +4,21 @@ import {
   hyperscript
 } from "../utils/index.js"
 import hljs from "highlight.js"
-export const processMDAST = (markdownAST) => {
+
+const highlightJsAdapter = {
+  highlight(code, language) {
+    if (language) {
+      return hljs.highlight(code, {
+        language
+      }).value;
+    }
+    return hljs.highlightAuto(code).value;
+  }
+};
+export const processMDAST = (
+  markdownAST,
+  { syntaxHighlightAdapter = highlightJsAdapter} = {}
+) => {
     let hasCode = false;
     let Tags = new Set()
     const transformNode = (node) => {
@@ -78,12 +92,27 @@ export const processMDAST = (markdownAST) => {
           Tags.add('code');
           return hyperscript("code", "{}", `"${node.value}"`)
         }
-        case 'code': {
-          hasCode = true;
-          const highlightedCode = hljs.highlightAuto(node.value, [node.lang || '']).value;
-          const formatedCode = highlightedCode.replace(/(\r\n|\n|\r)/g, "<br>");   
-          return `HTMLWrapper('<pre><code>${formatedCode}</code></pre>')`
-        }
+        // case 'code': {
+        //   hasCode = true;
+        //   const highlightedCode = hljs.highlightAuto(node.value, [node.lang || '']).value;
+        //   const formatedCode = highlightedCode.replace(/(\r\n|\n|\r)/g, "<br>");   
+        //   return `HTMLWrapper('<pre><code>${formatedCode}</code></pre>')`
+        // }
+        case "code": {
+        hasCode = true;
+
+        const highlightedCode = syntaxHighlightAdapter
+          ? syntaxHighlightAdapter.highlight(
+              node.value,
+              node.lang
+            )
+          : node.value;
+
+        const formatedCode = highlightedCode
+          .replace(/(\r\n|\n|\r)/g, "<br>");
+
+        return `HTMLWrapper('<pre><code>${formatedCode}</code></pre>')`;
+      }
         case 'blockquote': {
           const childNodes = node.children.map(transformNode).join(', ');
           Tags.add('blockquote');
