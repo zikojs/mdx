@@ -30,7 +30,8 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zakarialaoui10/mdzjs.git"
+    "url": "git+https://github.com/zikojs/mdx.git",
+    "directory": "packages/mdx"
   },
   "license": "MIT",
   "dependencies": {
