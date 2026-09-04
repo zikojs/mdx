@@ -6,6 +6,9 @@ settings:
 
 catalogs:
   default:
+    vite:
+      specifier: ^8.2.1
+      version: 8.2.2
     ziko:
       specifier: ^1.10.0
       version: 1.10.0
@@ -115,6 +118,9 @@ importers:
       '@zikojs/mdx':
         specifier: workspace:*
         version: link:../mdx
+      vite:
+        specifier: 'catalog:'
+        version: 8.2.2(yaml@2.9.0)
       ziko:
         specifier: 'catalog:'
         version: 1.10.0

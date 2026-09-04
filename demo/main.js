@@ -1,5 +1,5 @@
 import {tags} from 'ziko/dom'
-import UI from './test.ziko.mdx'
+import UI from './ziko/test.ziko.mdx'
 import { ScrollArea } from 'zextra/containers'
 
 // import hljs from "highlight.js"

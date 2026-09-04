@@ -6,7 +6,8 @@ export default defineConfig({
     plugins : [
         MDX({
             syntaxHighlightAdapter,
-            marker: '.ziko'
+            marker: '.ziko',
+            includes : ['**/zi/*']
         })
     ]
 })
