@@ -1,0 +1,44 @@
+{
+  "name": "@zikojs/mdx-highlightjs-adapter",
+  "version": "0.1.1",
+  "description": "Highlight.js syntax highlighting adapter for ZikoJS MDX",
+  "keywords": [
+    "zikojs",
+    "mdx",
+    "highlightjs",
+    "highlight.js",
+    "syntax-highlighting",
+    "syntax-highlight",
+    "adapter",
+    "markdown"
+  ],
+  "homepage": "https://github.com/zikojs/mdx#readme",
+  "bugs": {
+    "url": "https://github.com/zikojs/mdx/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zikojs/mdx.git",
+    "directory": "packages/mdx-highlightjs-adapter"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    ".": {
+      "import": "./src/index.js",
+      "types": "./src/index.d.ts"
+    }
+  },
+  "license": "MIT",
+  "author": "zakaria elalaoui",
+  "type": "module",
+  "dependencies": {
+    "@zikojs/mdx": "workspace:*",
+    "highlight.js": "^11.12.0",
+    "ziko": "catalog:"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

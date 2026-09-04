@@ -1,0 +1,43 @@
+{
+  "name": "@zikojs/mdx-prismjs-adapter",
+  "version": "0.1.1",
+  "description": "Highlight.js syntax highlighting adapter for ZikoJS MDX",
+  "keywords": [
+    "zikojs",
+    "mdx",
+    "prismjs",
+    "syntax-highlighting",
+    "syntax-highlight",
+    "adapter",
+    "markdown"
+  ],
+  "homepage": "https://github.com/zikojs/mdx#readme",
+  "bugs": {
+    "url": "https://github.com/zikojs/mdx/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zikojs/mdx.git",
+    "directory": "packages/mdx-prismjs-adapter"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    ".": {
+      "import": "./src/index.js",
+      "types": "./src/index.d.ts"
+    }
+  },
+  "license": "MIT",
+  "author": "zakaria elalaoui",
+  "type": "module",
+  "dependencies": {
+    "@zikojs/mdx": "workspace:*",
+    "prismjs": "^1.30.0",
+    "ziko": "catalog:"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

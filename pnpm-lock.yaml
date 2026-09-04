@@ -86,6 +86,30 @@ importers:
         specifier: ^10.1.0
         version: 10.1.0
 
+  packages/mdx-highlightjs-adapter:
+    dependencies:
+      '@zikojs/mdx':
+        specifier: workspace:*
+        version: link:../mdx
+      highlight.js:
+        specifier: ^11.12.0
+        version: 11.12.0
+      ziko:
+        specifier: 'catalog:'
+        version: 1.10.0
+
+  packages/mdx-prismjs-adapter:
+    dependencies:
+      '@zikojs/mdx':
+        specifier: workspace:*
+        version: link:../mdx
+      prismjs:
+        specifier: ^1.30.0
+        version: 1.30.0
+      ziko:
+        specifier: 'catalog:'
+        version: 1.10.0
+
   packages/vite-plugin-mdx:
     dependencies:
       '@zikojs/mdx':
@@ -1010,6 +1034,10 @@ packages:
   postcss@8.5.26:
     resolution: {integrity: sha512-u82N74LFzG8ca+dD8puPnplTXoGH4fTPpVGuIbt36G3qvNlkvfD0lEAZSxaly3KX8TS/L1A1gsCEmvKmBcVbkQ==}
     engines: {node: ^10 || ^12 || >=14}
+
+  prismjs@1.30.0:
+    resolution: {integrity: sha512-DEvV2ZF2r2/63V+tK8hQvrR2ZGn10srHbXviTlcv7Kpzw8jWiNTqbVgjO3IY8RxrrOUF8VPMQQFysYYYv0YZxw==}
+    engines: {node: '>=6'}
 
   process@0.11.10:
     resolution: {integrity: sha512-cdGef/drWFoydD1JsMzuFf8100nZl+GT+yacc2bEced5f9Rjk4z+WtFUTBu9PhOi9j/jfmBPu0mMEY4wIdAF8A==}
@@ -2310,6 +2338,8 @@ snapshots:
       nanoid: 3.3.18
       picocolors: 1.1.1
       source-map-js: 1.2.1
+
+  prismjs@1.30.0: {}
 
   process@0.11.10: {}
 
