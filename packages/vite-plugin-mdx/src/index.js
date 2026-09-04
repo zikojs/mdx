@@ -1,18 +1,25 @@
+import { createFilter } from "vite";
 import { transpileMD } from "@zikojs/mdx";
 
 export default function ViteMDX({
   plugins,
   syntaxHighlightAdapter = null,
-  marker = ''
+  marker = "",
+  include = ["**/*"],
 } = {}) {
   const extensions = [".mdx", ".md"];
 
-  const isMarkdownFile = (id) =>
-    extensions.some((ext) =>
+  const includeFilter = createFilter(include);
+
+  const isMarkdownFile = (id) => {
+    if (!includeFilter(id)) return false;
+
+    return extensions.some((ext) =>
       marker
         ? id.endsWith(`${marker}${ext}`)
         : id.endsWith(ext)
     );
+  };
 
   return {
     name: "@zikojs/vite-plugin-mdx",
@@ -22,12 +29,12 @@ export default function ViteMDX({
 
       const code = await transpileMD(src, {
         plugins,
-        syntaxHighlightAdapter
+        syntaxHighlightAdapter,
       });
 
       return {
         code,
-        map: null
+        map: null,
       };
     },
 
@@ -35,7 +42,7 @@ export default function ViteMDX({
       if (!isMarkdownFile(file)) return;
 
       server.ws.send({
-        type: "full-reload"
+        type: "full-reload",
       });
 
       // server.ws.send({
@@ -48,6 +55,6 @@ export default function ViteMDX({
       // });
 
       return [file];
-    }
+    },
   };
 }
