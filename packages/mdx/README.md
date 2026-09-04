@@ -1,22 +1,24 @@
 # MDZjs
 
-[![mdzjs banner](https://raw.githubusercontent.com/zikojs/.github/main/assets/banners/mdzjs.svg)](https://github.com/zikojs)
-
 A Markdown preprocessor for Zikojs.
 It combines the simplicity of Markdown syntax with the power and flexibility of ***Javascript***
 
+<!-- [![mdzjs banner](https://raw.githubusercontent.com/zikojs/.github/main/assets/banners/mdzjs.svg)](https://github.com/zikojs) -->
+
+
+
 ## Install 
 ```bash
- npm i mdzjs
+ npm i @zikojs/vite-plugin-mdx
 ```
  
 ## Config 
 ```js
 import {defineConfig} from "vite"
-import MDZ from "mdzjs/vite"
+import MDX from "@zikojs/vite-plugin-mdx"
 export default defineConfig({
     plugins : [
-        MDZ()
+        MDX()
     ]
 })
 ```
