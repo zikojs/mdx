@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@zikojs/vite-plugin-mdx": "workspace:*",
+    "@zikojs/mdx-highlightjs-adapter": "workspace:*",
     "highlight.js": "^11.12.0",
     "jsdom": "^30.0.1",
     "zextra": "^1.13.0"

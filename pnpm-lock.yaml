@@ -20,6 +20,9 @@ importers:
 
   demo:
     dependencies:
+      '@zikojs/mdx-highlightjs-adapter':
+        specifier: workspace:*
+        version: link:../packages/mdx-highlightjs-adapter
       '@zikojs/vite-plugin-mdx':
         specifier: workspace:*
         version: link:../packages/vite-plugin-mdx
@@ -42,9 +45,6 @@ importers:
       acorn:
         specifier: ^8.18.0
         version: 8.18.0
-      highlight.js:
-        specifier: ^11.12.0
-        version: 11.12.0
       htmlparser2:
         specifier: ^12.0.0
         version: 12.0.0

@@ -1,11 +1,15 @@
 import { transpileMD } from "@zikojs/mdx";
 
-export default function ViteMDX({ extensions = [".mdx"], plugins } = {}) {
+export default function ViteMDX({ 
+  extensions = [".mdx"], 
+  plugins,
+  syntaxHighlightAdapter = null
+} = {}) {
   return {
     name: "@zikojs/mdx-loader",
     async transform(src, id) {
-      if (id.endsWith(".mdz") || extensions.some((ext) => id.endsWith(ext))) {
-        const code = await transpileMD(src, {plugins});
+      if (id.endsWith(".mdx") || extensions.some((ext) => id.endsWith(ext))) {
+        const code = await transpileMD(src, {plugins, syntaxHighlightAdapter});
         return {
           code,
           map: null,

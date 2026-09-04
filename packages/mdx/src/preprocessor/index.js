@@ -3,18 +3,7 @@ import {
   processAttribute,
   hyperscript
 } from "../utils/index.js"
-import hljs from "highlight.js"
 
-const highlightJsAdapter = {
-  highlight(code, language) {
-    if (language) {
-      return hljs.highlight(code, {
-        language
-      }).value;
-    }
-    return hljs.highlightAuto(code).value;
-  }
-};
 export const processMDAST = (
   markdownAST,
   { syntaxHighlightAdapter = highlightJsAdapter} = {}
