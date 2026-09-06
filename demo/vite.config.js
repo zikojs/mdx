@@ -7,7 +7,16 @@ export default defineConfig({
         MDX({
             syntaxHighlightAdapter,
             marker: '.ziko',
-            includes : ['**/zi/*']
+            include : ['**/articles/*']
         })
     ]
 })
+
+// server.ws.send({
+//   type: "custom",
+//   event: "custom-update",
+//   data: {
+//     file,
+//     timestamp: Date.now(),
+//   },
+// });

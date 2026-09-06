@@ -7,6 +7,7 @@ catalog:
   ziko: ^1.10.0
   vite: ^8.2.1
   acorn: ^8.18.0
+  "@rollup/pluginutils" : ^5.4.0
 
 # Wait at least 7 days before installing newly published package versions.
 minimumReleaseAge: 10080
