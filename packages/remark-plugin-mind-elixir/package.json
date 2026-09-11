@@ -1,0 +1,40 @@
+{
+  "name": "@zikojs/remark-plugin-mind-elixir",
+  "version": "0.1.1",
+  "description": "",
+  "keywords": [
+    "zikojs",
+    "mdx"
+  ],
+  "homepage": "https://github.com/zikojs/mdx#readme",
+  "bugs": {
+    "url": "https://github.com/zikojs/mdx/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zikojs/mdx.git",
+    "directory": "packages/remark-plugin-mind-elixir"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    ".": {
+      "import": "./src/index.js",
+      "types": "./src/index.d.ts"
+    }
+  },
+  "license": "MIT",
+  "author": "zakaria elalaoui",
+  "type": "module",
+  "dependencies": {
+    "@zikojs/mdx": "workspace:*",
+    "prismjs": "^1.30.0",
+    "unist-util-visit": "^5.1.0",
+    "yaml": "^2.9.0",
+    "ziko": "catalog:"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
