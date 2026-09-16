@@ -8,7 +8,9 @@ export default defineConfig({
             syntaxHighlightAdapter,
             marker: '.ziko',
             include : ['**/articles/*'],
-            plugins:[MindElixir()]
+            plugins:[
+                MindElixir
+            ]
         })
     ]
 })

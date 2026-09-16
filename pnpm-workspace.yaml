@@ -5,7 +5,7 @@ packages:
 
 # Define a catalog of version ranges.
 catalog:
-  ziko: ^1.10.0
+  ziko: latest
   vite: ^8.2.1
   acorn: ^8.18.0
   "@rollup/pluginutils": ^5.4.0

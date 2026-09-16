@@ -6,12 +6,12 @@ const transpileMD = async (Markdown, {plugins = [], syntaxHighlightAdapter = nul
     const {ast, frontmatter} = await parseMD(Markdown.trimStart(), ...plugins);
     const {esm, statements, hasCode, Tags}= processMDAST(ast, {syntaxHighlightAdapter});
 
-    const { 'MDZ.Props': props, ...attrs } = frontmatter;
+    const { 'MDX.Props': props, ...attrs } = frontmatter;
 
-    const imports = hasCode ? 'import {tags, HTMLWrapper} from "ziko/dom"' : 'import {tags} from "ziko/dom"';
-
+    const importHTMLWrapper = hasCode ? `import {HTMLWrapper} from 'ziko/components/HTMLWrapper'` : ''
     const body = [
-        imports,
+        `import { tags } from 'ziko/dom/tags'`,
+        importHTMLWrapper,
         ...esm,
         transformeAttrs(attrs),
         `export default (${stringifyProps(props)})=>{`,
@@ -20,8 +20,7 @@ const transpileMD = async (Markdown, {plugins = [], syntaxHighlightAdapter = nul
         ...statements,
         'return __items__',
         '}',
-      ]
-    // if(hasCode) body.unshift(`import("highlight.js/styles/${CodeStyle}.css")`);
+      ].filter(Boolean)
     return body.join("\n");
 }
 export{

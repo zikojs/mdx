@@ -1,4 +1,4 @@
-import {tags, text} from "ziko/dom"
+import {tags} from "ziko/dom"
 export default ({data , color = 'red'})=>{
     let txt = tags.span(data).style({color})
     // let inp = tags.input(data).style({
