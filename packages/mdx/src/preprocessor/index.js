@@ -62,7 +62,7 @@ export const processMDAST = (
         case 'image': {
           hyperscript("img", `{ src: "${node.url}", alt: "${node.alt || ''}`);
           Tags.add('img');
-          return `tags.img({ src: "${node.url}", alt: "${node.alt || ''}" })`;
+          return `img({ src: "${node.url}", alt: "${node.alt || ''}" })`;
         }
   
         case 'list': {
@@ -131,9 +131,10 @@ export const processMDAST = (
         }
         case 'mdxJsxTextElement': {
           const {name, attributes, children} = node;
+          Tags.add(name)
           const childNodes = children.map(transformNode).join(', ');
           const hasChildren = childNodes.length > 0;
-          return `tags.${name}(${processAttribute(attributes)}${hasChildren ?`, ${childNodes}`:""})`;
+          return `${name}(${processAttribute(attributes)}${hasChildren ?`, ${childNodes}`:""})`;
         };
         case 'mdxJsxFlowElement':{
           const {name, attributes, children} = node;
@@ -145,7 +146,7 @@ export const processMDAST = (
             }
             case "html" : {
               Tags.add(name);
-              return `tags.${name}(${processAttribute(attributes)}${hasChildren ?`, ${childNodes}`:""})`;
+              return `${name}(${processAttribute(attributes)}${hasChildren ?`, ${childNodes}`:""})`;
             }
             case "script" : {
               const statements = [];
