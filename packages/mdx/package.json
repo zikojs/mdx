@@ -1,6 +1,6 @@
 {
   "name": "@zikojs/mdx",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "markdown preprocessor for zikojs",
   "main": "index.js",
   "type": "module",
@@ -12,7 +12,10 @@
   },
   "types": "./types/index.d.ts",
   "exports": {
-    ".": "./src/index.js"
+    ".": "./src/index.js",
+    "./*":{
+      "import": "./src/*/index.js"
+    }
   },
   "publishConfig": {
     "access": "public"
