@@ -1,14 +1,30 @@
-export const hyperscript = (tag, attrs, children="") => {
-    const HasChildren = !!children;
-    if(tag){
-        children = ',""' + children + ',""'
-        const splitted = splitQuotedLines(children);
-        children = insertBetween(splitted, 'tags.br({})')
-        children[children.length - 1] = children.at(-1).slice(0, -3)
-        children[0] = children.at(0).slice(3)
-    }
-    return `${tag}(${attrs}${HasChildren ?`, ${children}` : ""})`
-}
+export const hyperscript = (
+  tag,
+  attrs,
+  children = "",
+  { rawChildren = false } = {}
+) => {
+  const HasChildren = !!children;
+
+  if (tag && !rawChildren) {
+    children = ',""' + children + ',""';
+
+    const splitted = splitQuotedLines(children);
+
+    children = insertBetween(
+      splitted,
+      'br({})'
+    );
+
+    children[children.length - 1] =
+      children.at(-1).slice(0, -3);
+
+    children[0] =
+      children.at(0).slice(3);
+  }
+
+  return `${tag}(${attrs}${HasChildren ? `, ${children}` : ""})`;
+};
 
 function splitQuotedLines(str) {
   return str

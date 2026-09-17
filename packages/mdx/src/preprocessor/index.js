@@ -1,14 +1,17 @@
 import { 
   componentType,
   processAttribute,
-  hyperscript
+  hyperscript,
+  transformHTMLNode
 } from "../utils/index.js"
+
+import { parseDocument } from "htmlparser2";
+
 
 export const processMDAST = (
   markdownAST,
-  { syntaxHighlightAdapter = highlightJsAdapter} = {}
+  { syntaxHighlightAdapter = null} = {}
 ) => {
-    let hasCode = false;
     let Tags = new Set()
     const transformNode = (node) => {
       switch(node.type){
@@ -81,27 +84,27 @@ export const processMDAST = (
           Tags.add('code');
           return hyperscript("code", "{}", `"${node.value}"`)
         }
-        // case 'code': {
-        //   hasCode = true;
-        //   const highlightedCode = hljs.highlightAuto(node.value, [node.lang || '']).value;
-        //   const formatedCode = highlightedCode.replace(/(\r\n|\n|\r)/g, "<br>");   
-        //   return `HTMLWrapper('<pre><code>${formatedCode}</code></pre>')`
-        // }
-        case "code": {
-        hasCode = true;
-
-        const highlightedCode = syntaxHighlightAdapter
-          ? syntaxHighlightAdapter.highlight(
-              node.value,
-              node.lang
+      case "code": {
+          Tags.add('pre')
+          Tags.add('code')
+          const highlightedCode = syntaxHighlightAdapter
+            ? syntaxHighlightAdapter.highlight(node.value, node.lang)
+            : node.value;
+          const htmlAST = parseDocument(highlightedCode);
+          const children = htmlAST.children
+            .map(transformHTMLNode)
+            .filter(Boolean)
+            .join(", ");
+          return hyperscript(
+            "pre",
+            "{}",
+            hyperscript(
+              "code",
+              `{ class: "language-${node.lang || ""}" }`,
+              children
             )
-          : node.value;
-
-        const formatedCode = highlightedCode
-          .replace(/(\r\n|\n|\r)/g, "<br>");
-
-        return `HTMLWrapper('<pre><code>${formatedCode}</code></pre>')`;
-      }
+          );
+        }
         case 'blockquote': {
           const childNodes = node.children.map(transformNode).join(', ');
           Tags.add('blockquote');
@@ -178,6 +181,5 @@ export const processMDAST = (
       Tags,
       esm,
       statements,
-      hasCode
     }
   };

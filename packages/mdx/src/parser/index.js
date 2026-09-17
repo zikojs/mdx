@@ -33,26 +33,3 @@ export async function parseMD(markdown, ...plugins) {
     ast,
   };
 }
-
-// const inp = `
-// ---
-// a : 1
-// b : 2
-// MDZ.Props : 
-//  - a : 1
-//  - c : 2
-// ---
-
-// // // const {a, b} 
-// // // = MDZ.Props
-
-// // ## Contents
-
-// // ## History
-
-// // ### Discovery
-// // `.trimStart()
-// const out = await parseMD(inp)
-// console.log(out.ast)
-
-// // console.log(JSON.stringify(out.ast.children, null, 2))

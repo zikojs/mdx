@@ -5,16 +5,13 @@ packages:
 
 # Define a catalog of version ranges.
 catalog:
-  ziko: latest
+  ziko: ^2.0.0-beta.14
   vite: ^8.2.1
   acorn: ^8.18.0
   "@rollup/pluginutils": ^5.4.0
 
 # Wait at least 7 days before installing newly published package versions.
-minimumReleaseAge: 10080
-
-# minimumReleaseAgeExclude:
-#   - ziko@1.10.0
+# minimumReleaseAge: 10080
 
 # Prevent transitive dependencies from being installed from untrusted sources.
 blockExoticSubdeps: true
@@ -24,3 +21,6 @@ trustPolicy: no-downgrade
 
 allowBuilds:
   esbuild: false
+
+minimumReleaseAgeExclude:
+  - ziko@2.0.0-beta.13 || 2.0.0-beta.14

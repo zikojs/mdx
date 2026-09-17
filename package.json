@@ -23,6 +23,6 @@
   "dependencies": {
     "@rollup/pluginutils": "^5.4.0",
     "unist-util-visit": "^5.1.0",
-    "ziko": "catalog:"
+    "ziko": "2.0.0-beta.14"
   }
 }
