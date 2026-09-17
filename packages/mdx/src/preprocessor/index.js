@@ -87,6 +87,7 @@ export const processMDAST = (
       case "code": {
           Tags.add('pre')
           Tags.add('code')
+          Tags.add('span')
           const highlightedCode = syntaxHighlightAdapter
             ? syntaxHighlightAdapter.highlight(node.value, node.lang)
             : node.value;
