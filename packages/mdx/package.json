@@ -1,6 +1,6 @@
 {
   "name": "@zikojs/mdx",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "description": "markdown preprocessor for zikojs",
   "main": "index.js",
   "type": "module",
