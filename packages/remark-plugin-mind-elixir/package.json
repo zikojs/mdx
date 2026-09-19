@@ -22,6 +22,10 @@
     ".": {
       "import": "./src/index.js",
       "types": "./src/index.d.ts"
+    },
+    "./client": {
+      "import": "./src/index.js",
+      "types": "./src/index.d.ts"
     }
   },
   "license": "MIT",

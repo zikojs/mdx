@@ -60,6 +60,9 @@ importers:
 
   packages/mdx:
     dependencies:
+      '@zikojs/remark-plugin-mind-elixir':
+        specifier: workspace:*
+        version: link:../remark-plugin-mind-elixir
       acorn:
         specifier: ^8.18.0
         version: 8.18.0

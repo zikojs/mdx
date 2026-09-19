@@ -1,51 +1,9 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
-    <link
-      href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah&display=swap"
-      rel="stylesheet"
-    />
-    <link href="https://fonts.cdnfonts.com/css/cheeronsta" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/monokai.css">
-
-            <style>
-              html{
-                overflow: hidden;
-              }
-              pre{
-                border: 1px dodgerblue dotted;
-                padding: 1em;
-                /* background : #282b2e;
-                padding : 10px;
-                color : white */
-              }
-            </style>                    
-    <!-- <style>
-      body{
-        font-family: "Gloria Hallelujah", cursive;
-        font-weight: 700;
-        text-wrap :wrap !important;
-        overflow-x: hidden;
-      }
-    </style> -->
-  </head>
-  <body>
-    <script type="module" src="/main.js"></script>
-    <script>
-      // mind-elixir-client.js
-// Finds every .mind-elixir-block emitted by remark-mind-elixir and renders it (lazily, when scrolled into view).
-
 const SELECTOR = '.mind-elixir-block[data-mind-elixir]:not([data-rendered])'
 
 let MindElixirPromise
 const loadMindElixir = () =>
   (MindElixirPromise ??= import('mind-elixir').then(async (m) => {
-    await import('mind-elixir/style.css') // adjust if your version exposes the CSS differently
+    // await import('mind-elixir/style.css') // adjust if your version exposes the CSS differently
     return m.default
   }))
 
@@ -99,7 +57,3 @@ if (typeof document !== 'undefined') {
   document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', run) : run()
   document.addEventListener('astro:page-load', run) // Astro view transitions
 }
-    </script>
-    <div id="app"></div>
-  </body>
-</html>

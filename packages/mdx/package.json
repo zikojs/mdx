@@ -51,7 +51,8 @@
     "vfile": "^6.0.3",
     "vfile-matter": "^5.0.1",
     "vfile-reporter": "^8.1.1",
-    "ziko": "catalog:"
+    "ziko": "catalog:",
+    "@zikojs/remark-plugin-mind-elixir": "workspace:*"
   },
   "devDependencies": {
     "cross-env": "^10.1.0"
