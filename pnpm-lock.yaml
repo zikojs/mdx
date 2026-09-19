@@ -142,12 +142,12 @@ importers:
       '@zikojs/mdx':
         specifier: workspace:*
         version: link:../mdx
-      prismjs:
-        specifier: ^1.30.0
-        version: 1.30.0
       unist-util-visit:
         specifier: ^5.1.0
         version: 5.1.0
+      unist-util-visit-parents:
+        specifier: ^6.0.2
+        version: 6.0.2
       yaml:
         specifier: ^2.9.0
         version: 2.9.1
