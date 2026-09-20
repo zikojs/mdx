@@ -77,7 +77,7 @@ async function render(el) {
   }
 }
 
-export function hydrateMindElixir(root = document) {
+function hydrateMindElixir(root = document) {
   const nodes = root.querySelectorAll(SELECTOR)
   if (!nodes.length) return
   const io = new IntersectionObserver(

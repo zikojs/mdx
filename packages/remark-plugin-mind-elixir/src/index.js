@@ -16,8 +16,15 @@ const remarkImg = (options = {}) => {
 
     visitParents(
       ast,
-      { type: 'code', lang: 'img' },
+      { type: 'code', lang: 'mind-elixir' },
       (node, ancestors) => {
+        node.data = {
+          hProperties: {
+            id: 'intro',
+            className: ['foo'],
+            'data-type': 'custom'
+          }
+        }
         instances.push([...ancestors, node])
       }
     )
@@ -59,8 +66,20 @@ const remarkImg = (options = {}) => {
         children: [
           {
             type: 'image',
-            url,
+            url : '',
             alt: node.meta || ''
+          },
+          {
+            type: 'code',
+            lang: 'yaml',
+            meta: 'jj',
+            value: 'console.log({a:1})',
+            data: {
+              hProperties: {
+                // Adds data-id to the resulting HTML <p> tag
+                'data-id': 'default-id',
+              }
+            },
           }
         ]
       }

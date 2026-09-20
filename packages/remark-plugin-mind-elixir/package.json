@@ -33,9 +33,10 @@
   "type": "module",
   "dependencies": {
     "@zikojs/mdx": "workspace:*",
+    "hast-util-from-html-isomorphic": "^2.0.0",
     "unist-util-visit": "^5.1.0",
     "unist-util-visit-parents": "^6.0.2",
-    "yaml": "^2.9.0",
+    "yaml": "^2.9.1",
     "ziko": "catalog:"
   },
   "scripts": {
