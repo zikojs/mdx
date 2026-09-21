@@ -37,7 +37,6 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@zikojs/remark-plugin-mind-elixir": "workspace:*",
     "acorn": "^8.18.0",
     "htmlparser2": "^12.0.0",
     "rehype-highlight": "^7.0.2",

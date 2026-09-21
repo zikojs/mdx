@@ -7,9 +7,6 @@ import remarkToc from 'remark-toc'
 import remarkGFM from 'remark-gfm';
 import { VFile } from 'vfile';
 import {matter} from 'vfile-matter';
-import MindElixir from '@zikojs/remark-plugin-mind-elixir'
-
-
 
 export async function parseMD(markdown, ...plugins) {
   const file = new VFile(markdown);

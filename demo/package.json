@@ -13,7 +13,6 @@
   },
   "dependencies": {
     "@zikojs/mdx-highlightjs-adapter": "workspace:*",
-    "@zikojs/remark-plugin-mind-elixir": "workspace:*",
     "@zikojs/vite-plugin-mdx": "workspace:*",
     "highlight.js": "^11.12.0",
     "jsdom": "^30.0.1",

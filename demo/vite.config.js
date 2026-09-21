@@ -1,7 +1,6 @@
 import { defineConfig } from "vite";
 import MDX from "@zikojs/vite-plugin-mdx"
 import syntaxHighlightAdapter from '@zikojs/mdx-highlightjs-adapter'
-import MindElixir from '@zikojs/remark-plugin-mind-elixir'
 export default defineConfig({
     plugins : [
         MDX({
@@ -9,7 +8,6 @@ export default defineConfig({
             marker: '.ziko',
             include : ['**/articles/*'],
             plugins:[
-                MindElixir
             ]
         })
     ]

@@ -7,25 +7,6 @@ import {
 
 import { parseDocument } from "htmlparser2";
 
-const styleToObject = (css = "") =>
-  Object.fromEntries(
-    css
-      .split(";")
-      .map((d) => d.trim())
-      .filter(Boolean)
-      .map((d) => {
-        const i = d.indexOf(":");
-        const prop = d.slice(0, i).trim();
-        const value = d.slice(i + 1).trim();
-        // keep custom properties as-is, camelCase everything else
-        const key = prop.startsWith("--")
-          ? prop
-          : prop.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
-        return [key, value];
-      })
-  );
-
-
 export const processMDAST = (
   markdownAST,
   { syntaxHighlightAdapter = null, useCreateElement = false } = {}
@@ -61,23 +42,6 @@ export const processMDAST = (
         Tags.add(tag);
         return hyperscript(tag, "{}", childNodes);
       }
-
-      // case "mindElixir": {
-      //   const { className, style, ...rest } = node.data?.hProperties ?? {};
-      //   const props = {
-      //     class: [].concat(className ?? []).join(" "),
-      //     ...(style ? { style: typeof style === "string" ? styleToObject(style) : style } : {}),
-      //     ...rest,
-      //   };
-      //   Tags.add("div");
-      //   return `div(${JSON.stringify(props)})`;
-      // }
-
-      // case "mindElixirError": {
-      //   Tags.add("pre");
-      //   const msg = node.data?.hChildren?.[0]?.value ?? "mind-elixir: invalid block";
-      //   return hyperscript("pre", `{ class: "mind-elixir-error" }`, JSON.stringify(msg));
-      // }
 
       case "paragraph":
       case "strong":
