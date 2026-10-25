@@ -1,6 +1,6 @@
-import { p } from "ziko"
+import { tags } from "ziko/dom"
 export default ()=>{
-    return p("About  ").style({
+    return tags.p("About  ").style({
         color:"red",
     })
 }

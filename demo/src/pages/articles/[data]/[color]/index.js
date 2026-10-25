@@ -1,6 +1,6 @@
-import { text } from "ziko";
+import { tags } from "ziko/dom";
 export default ({data,color})=>{
-    return text(data).style({
+    return tags.p(data).style({
         color : color
     })
 }
