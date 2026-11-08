@@ -1,15 +1,15 @@
 {
-  "name": "zikojs-transpilers-root",
+  "name": "zikojs-mdx-root",
   "version": "1.0.0",
   "description": "",
   "private": "true",
-  "homepage": "https://github.com/zikojs/transpilers#readme",
+  "homepage": "https://github.com/zikojs/mdx#readme",
   "bugs": {
-    "url": "https://github.com/zikojs/transpilers/issues"
+    "url": "https://github.com/zikojs/mdx/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zikojs/transpilers.git"
+    "url": "git+https://github.com/zikojs/mdx.git"
   },
   "workspaces": [
     "packages/*"
@@ -24,5 +24,13 @@
     "@rollup/pluginutils": "^5.5.1",
     "unist-util-visit": "^5.2.0",
     "ziko": "2.0.0-rc.12"
-  }
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "12.14.0",
+      "onFail": "download"
+    }
+  },
+  "packageManager": "pnpm@12.14.0"
 }
