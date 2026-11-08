@@ -13,4 +13,4 @@ allowBuilds:
   esbuild: false
 
 minimumReleaseAgeExclude:
-  - ziko@2.0.0-rc.11 || 2.0.0-rc.12
+  - ziko@2.0.0-rc.12
