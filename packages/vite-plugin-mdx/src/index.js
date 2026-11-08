@@ -1,18 +1,18 @@
-import path from "node:path";
-import { createFilter } from "vite";
-import { transpileMD } from "@zikojs/mdx";
+import path from 'node:path';
+import { createFilter } from 'vite';
+import { transpileMD } from '@zikojs/mdx';
 
 export default function ViteMDX({
   plugins,
   syntaxHighlightAdapter = null,
-  marker = "",
-  include = ["**/*"],
+  marker = '',
+  include = ['**/*'],
   exclude,
 } = {}) {
-  const extensions = [".mdx", ".md"];
+  const extensions = ['.mdx', '.md'];
   let includeFilter;
   let root;
-  const cleanId = (id) => id.replace(/\\/g, "/").split("?")[0].split("#")[0];
+  const cleanId = (id) => id.replace(/\\/g, '/').split('?')[0].split('#')[0];
   const isMarkdownFile = (id) => {
     const clean = cleanId(id);
     if (!includeFilter(clean)) return false;
@@ -23,9 +23,9 @@ export default function ViteMDX({
     );
   };
   return {
-    name: "@zikojs/vite-plugin-mdx",
+    name: '@zikojs/vite-plugin-mdx',
     configResolved(config) {
-      root = path.resolve(config.root).replace(/\\/g, "/");
+      root = path.resolve(config.root).replace(/\\/g, '/');
       includeFilter = createFilter(include, exclude, { resolve: root });
     },
     async transform(src, id) {
@@ -42,11 +42,11 @@ export default function ViteMDX({
     handleHotUpdate({ file, server }) {
       if (!isMarkdownFile(file)) return;
       server.ws.send({
-        type: "full-reload",
+        type: 'full-reload',
       });
       // server.ws.send({
-      //   type: "custom",
-      //   event: "custom-update",
+      //   type: 'custom',
+      //   event: 'custom-update',
       //   data: {
       //     file,
       //     timestamp: Date.now(),

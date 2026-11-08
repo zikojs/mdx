@@ -14,7 +14,7 @@ catalogs:
       version: 8.3.6
     ziko:
       specifier: latest
-      version: 2.0.0-rc.11
+      version: 2.0.0-rc.12
 
 importers:
 
@@ -60,6 +60,9 @@ importers:
       acorn:
         specifier: ^8.18.0
         version: 8.19.0
+      highlight.js:
+        specifier: ^11.12.0
+        version: 11.12.0
       htmlparser2:
         specifier: ^12.0.0
         version: 12.0.0
@@ -104,7 +107,7 @@ importers:
         version: 8.1.1
       ziko:
         specifier: 'catalog:'
-        version: 2.0.0-rc.11
+        version: 2.0.0-rc.12
     devDependencies:
       cross-env:
         specifier: ^10.1.0
@@ -120,7 +123,7 @@ importers:
         version: 11.12.0
       ziko:
         specifier: 'catalog:'
-        version: 2.0.0-rc.11
+        version: 2.0.0-rc.12
 
   packages/mdx-prismjs-adapter:
     dependencies:
@@ -132,7 +135,7 @@ importers:
         version: 1.30.0
       ziko:
         specifier: 'catalog:'
-        version: 2.0.0-rc.11
+        version: 2.0.0-rc.12
 
   packages/vite-plugin-mdx:
     dependencies:
@@ -147,7 +150,7 @@ importers:
         version: 8.3.6(yaml@2.9.1)
       ziko:
         specifier: 'catalog:'
-        version: 2.0.0-rc.11
+        version: 2.0.0-rc.12
 
 packages:
 
