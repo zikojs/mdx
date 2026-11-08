@@ -1,6 +1,5 @@
 import {tags} from 'ziko/dom'
 import UI from './articles/test.ziko.mdx'
-import { ScrollArea } from 'zextra/containers'
 
 // import hljs from "highlight.js"
 import 'highlight.js/styles/github.css';
@@ -8,12 +7,7 @@ import 'highlight.js/styles/github.css';
 
 globalThis.items = UI({name : "from MDZjs"})
 
-globalThis.App = ScrollArea({}, ...items).style({
-    border : '1px darkblue solid',
-    padding : '16px',
-    height : '100vh'
-})
-
-
+const App = tags.section(...items)
 
 App.mount(document.body)
+

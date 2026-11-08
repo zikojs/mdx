@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@rollup/pluginutils": "^5.5.1",
-    "unist-util-visit": "^5.1.0",
-    "ziko": "2.0.0-beta.17.2"
+    "unist-util-visit": "^5.2.0",
+    "ziko": "2.0.0-rc.12"
   }
 }
