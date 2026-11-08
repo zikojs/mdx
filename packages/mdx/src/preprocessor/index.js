@@ -89,11 +89,11 @@ export const processMDAST = (
         Tags.add("code");
         Tags.add("span");
 
-        const highlightedCode = syntaxHighlightAdapter
-          ? syntaxHighlightAdapter.highlight(node.value, node.lang)
-          : node.value;
+        // const highlightedCode = syntaxHighlightAdapter
+        //   ? syntaxHighlightAdapter.highlight(node.value, node.lang)
+        //   : node.value;
 
-        const htmlAST = parseDocument(highlightedCode);
+        const htmlAST = parseDocument(node.value);
         const children = htmlAST.children
           .map(transformHTMLNode)
           .filter(Boolean)

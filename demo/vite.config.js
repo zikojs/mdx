@@ -10,7 +10,7 @@ export default defineConfig({
             include : ['**/articles/*'],
             plugins:[
             ],
-            // rehypePlugins:[rehypeHighlight]
+            rehypePlugins:[rehypeHighlight]
         
         })
     ]

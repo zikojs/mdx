@@ -69,7 +69,7 @@ export async function parseMD(markdown, ...pluginArgs) {
       ]),
     ],
   });
-  if (options.useRehypeHighlight !== false) processor.use(rehypeHighlight);
+  // if (options.useRehypeHighlight !== false) processor.use(rehypeHighlight);
   usePlugins(processor, rehypePlugins);
 
   const tree = processor.parse(file);
