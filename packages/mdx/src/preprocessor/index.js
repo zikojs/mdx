@@ -1,245 +1,188 @@
-import { 
+import {
   componentType,
   processAttribute,
   hyperscript,
   transformHTMLNode
-} from "../utils/index.js"
+} from '../utils/index.js'
 
-import { parseDocument } from "htmlparser2";
+import { parseDocument } from 'htmlparser2'
 
 export const processMDAST = (
   markdownAST,
-  { syntaxHighlightAdapter = null, useCreateElement = false } = {}
+  { useCreateElement = false } = {}
 ) => {
-  const Tags = new Set();
-  let UsesCreateElement = false;
+  const Tags = new Set()
+  let UsesCreateElement = false
 
   const transformNode = (node) => {
     switch (node.type) {
-      case "mdxjsEsm":
-        return { type: "script", value: node.value };
-
-      case "text": {
-        return JSON.stringify(node.value);
-      }
-
-      case "mdxTextExpression":
-        return node.value;
-
-      case "mdxFlowExpression": {
-        if (!node.parent || node.parent.type === "root") {
-          Tags.add("p");
-          return hyperscript("p", "{}", node.value);
+      case 'mdxjsEsm' : return { type: 'script', value: node.value }
+      case 'text' : return JSON.stringify(node.value)
+      case 'mdxTextExpression': return node.value
+      case 'mdxFlowExpression': {
+        if (!node.parent || node.parent.type === 'root') {
+          Tags.add('p')
+          return hyperscript('p', '{}', node.value)
         }
-        return node.value;
+        return node.value
       }
-
-      case "heading": {
-        const childNodes = node.children.map(transformNode).join(", ");
-        const tag = `h${node.depth}`;
-        Tags.add(tag);
-        return hyperscript(tag, "{}", childNodes);
+      case 'heading': {
+        const childNodes = node.children.map(transformNode).join(', ')
+        const tag = `h${node.depth}`
+        Tags.add(tag)
+        return hyperscript(tag, '{}', childNodes)
       }
-
-      case "paragraph":
-      case "strong":
-      case "emphasis":
-      case "blockquote":
-      case "listItem":
-      case "tableRow":
-      case "tableCell": {
+      case 'paragraph':
+      case 'strong':
+      case 'emphasis':
+      case 'blockquote':
+      case 'listItem':
+      case 'tableRow':
+      case 'tableCell': {
         const tagMap = {
-          paragraph: "p",
-          strong: "strong",
-          emphasis: "em",
-          blockquote: "blockquote",
-          listItem: "li",
-          tableRow: "tr",
-          tableCell: "td"
-        };
-        const tag = tagMap[node.type];
-        const childNodes = node.children.map(transformNode).join(", ");
-        Tags.add(tag);
-        return hyperscript(tag, "{}", childNodes);
+          paragraph: 'p',
+          strong: 'strong',
+          emphasis: 'em',
+          blockquote: 'blockquote',
+          listItem: 'li',
+          tableRow: 'tr',
+          tableCell: 'td'
+        }
+        const tag = tagMap[node.type]
+        const childNodes = node.children.map(transformNode).join(', ')
+        Tags.add(tag)
+        return hyperscript(tag, '{}', childNodes)
       }
-
-      case "link": {
-        const childNodes = node.children.map(transformNode).join(", ");
-        Tags.add("a");
-        return hyperscript("a", `{ href: "${node.url}" }`, childNodes);
+      case 'link': {
+        const childNodes = node.children.map(transformNode).join(', ')
+        Tags.add('a')
+        return hyperscript('a', `{ href: '${node.url}' }`, childNodes)
       }
-
-      case "image":
-        Tags.add("img");
-        return `img({ src: "${node.url}", alt: "${node.alt || ""}" })`;
-
-      case "list": {
-        const listTag = node.ordered ? "ol" : "ul";
-        Tags.add(listTag);
-        const childNodes = node.children.map(transformNode).join(", ");
-        return hyperscript(listTag, "{}", childNodes);
+      case 'image':
+        Tags.add('img')
+        return `img({ src: '${node.url}', alt: '${node.alt || ''}' })`
+      case 'list': {
+        const listTag = node.ordered ? 'ol' : 'ul'
+        Tags.add(listTag)
+        const childNodes = node.children.map(transformNode).join(', ')
+        return hyperscript(listTag, '{}', childNodes)
       }
-
-      case "inlineCode":
-        Tags.add("code");
-        return hyperscript("code", "{}", JSON.stringify(node.value));
-
-      case "code": {
-        Tags.add("pre");
-        Tags.add("code");
-        Tags.add("span");
-
-        // const highlightedCode = syntaxHighlightAdapter
-        //   ? syntaxHighlightAdapter.highlight(node.value, node.lang)
-        //   : node.value;
-
-        const htmlAST = parseDocument(node.value);
+      case 'inlineCode':
+        Tags.add('code')
+        return hyperscript('code', '{}', JSON.stringify(node.value))
+      case 'code': {
+        Tags.add('pre')
+        Tags.add('code')
+        Tags.add('span')
+        const htmlAST = parseDocument(node.value)
         const children = htmlAST.children
           .map(transformHTMLNode)
           .filter(Boolean)
-          .join(", ");
-
+          .join(', ')
         return hyperscript(
-          "pre",
-          "{}",
+          'pre',
+          '{}',
           hyperscript(
-            "code",
-            `{ class: "language-${node.lang || ""}" }`,
+            'code',
+            `{ class: 'language-${node.lang || ''}' }`,
             children
           )
-        );
+        )
       }
-
-      case "element": {
-        const { tagName, properties = {}, children = [] } = node;
-        if (!tagName) return "null";
-        Tags.add(tagName);
-
-        if (
-          tagName === "pre" &&
-          syntaxHighlightAdapter &&
-          children[0]?.tagName === "code"
-        ) {
-          const codeNode = children[0];
-          const code = codeNode.children
-            .map((child) =>
-              child.type === "text"
-                ? child.value
-                : child.children?.map((text) => text.value || "").join("") || ""
-            )
-            .join("");
-          const classes = codeNode.properties?.className || [];
-          const languageClass = (Array.isArray(classes) ? classes : [classes])
-            .find((name) => name.startsWith("language-"));
-          const language = languageClass?.slice("language-".length);
-          const highlightedCode = syntaxHighlightAdapter.highlight(code, language);
-          const htmlAST = parseDocument(highlightedCode);
-          const highlightedChildren = htmlAST.children
-            .map(transformHTMLNode)
-            .filter(Boolean)
-            .join(", ");
-
-          Tags.add("code").add("span");
-          return hyperscript(
-            "pre",
-            "{}",
-            hyperscript(
-              "code",
-              `{ class: ${JSON.stringify(languageClass || "")} }`,
-              highlightedChildren
-            )
-          );
-        }
-
+      case 'element': {
+        const { tagName, properties = {}, children = [] } = node
+        if (!tagName) return 'null'
+        Tags.add(tagName)
         const attrs = Object.entries(properties)
-          .filter(([, value]) => value !== null && value !== undefined && value !== false)
+          .filter(([, value]) =>
+            value !== null && value !== undefined && value !== false
+          )
           .map(([name, value]) => {
             const propertyName =
-              name === "className" ? "class" : name === "htmlFor" ? "for" : name;
-            const propertyValue = Array.isArray(value) ? value.join(" ") : value;
-            return `${JSON.stringify(propertyName)}: ${JSON.stringify(propertyValue)}`;
-          })
-          .join(", ");
-        const childNodes = children.map(transformNode).join(", ");
-        return hyperscript(tagName, `{${attrs}}`, childNodes);
+              name === 'className' ? 'class' :
+              name === 'htmlFor' ? 'for' :
+              name
+            const propertyValue = Array.isArray(value)
+              ? value.join(' ')
+              : value
+            return `${JSON.stringify(propertyName)}: ${JSON.stringify(propertyValue)}`
+          }).join(', ')
+        const childNodes = children.map(transformNode).join(', ')
+        return hyperscript(tagName, `{${attrs}}`, childNodes)
       }
-
-      case "thematicBreak":
-        Tags.add("hr");
-        return "hr({})";
-
-      case "table": {
-        const headerRows = node.children[0].children.map(transformNode).join(", ");
-        const bodyRows = node.children.slice(1).map(transformNode).join(", ");
-
-        const thead = hyperscript("thead", "{}", hyperscript("tr", "{}", headerRows));
-        const tbody = hyperscript("tbody", "{}", bodyRows);
-
-        Tags.add("table").add("thead").add("tbody").add("tr");
-
-        return hyperscript("table", "{}", [thead, tbody].join(","));
+      case 'thematicBreak':
+        Tags.add('hr')
+        return 'hr({})'
+      case 'table': {
+        const headerRows = node.children[0].children
+          .map(transformNode)
+          .join(', ')
+        const bodyRows = node.children
+          .slice(1)
+          .map(transformNode)
+          .join(', ')
+        const thead = hyperscript(
+          'thead',
+          '{}',
+          hyperscript('tr', '{}', headerRows)
+        )
+        const tbody = hyperscript('tbody', '{}', bodyRows)
+        Tags.add('table').add('thead').add('tbody').add('tr')
+        return hyperscript('table', '{}', [thead, tbody].join(','))
       }
-
-      case "mdxJsxTextElement":
-      case "mdxJsxFlowElement": {
-        const { name, attributes, children } = node;
-        const childNodes = children.map(transformNode).join(", ");
-        const props = processAttribute(attributes);
-        const hasChildren = childNodes.length > 0;
-
+      case 'mdxJsxTextElement':
+      case 'mdxJsxFlowElement': {
+        const { name, attributes, children } = node
+        const childNodes = children.map(transformNode).join(', ')
+        const props = processAttribute(attributes)
+        const hasChildren = childNodes.length > 0
         switch (componentType(name)) {
-          case "jsx":
+          case 'jsx':
             if (useCreateElement) {
-              UsesCreateElement = true;
-              return `createElement(${name}, ${props}${hasChildren ? `, ${childNodes}` : ""})`;
+              UsesCreateElement = true
+              return `createElement(${name}, ${props}${hasChildren ? `, ${childNodes}` : ''})`
             }
-            return `${name}(${props}${hasChildren ? `, ${childNodes}` : ""})`;
-
-          case "html":
-            Tags.add(name);
-            return `${name}(${props}${hasChildren ? `, ${childNodes}` : ""})`;
-
-          case "script": {
+            return `${name}(${props}${hasChildren ? `, ${childNodes}` : ''})`
+          case 'html':
+            Tags.add(name)
+            return `${name}(${props}${hasChildren ? `, ${childNodes}` : ''})`
+          case 'script': {
             const statements = [];
             for (let i = 0; i < children.length; i++) {
               if (children[i]?.children?.[0]?.value) {
-                statements.push(children[i].children[0].value);
+                statements.push(children[i].children[0].value)
               }
             }
             return {
-              type: "script",
+              type: 'script',
               isScript: true,
-              value: statements.join("\n")
-            };
+              value: statements.join('\n')
+            }
           }
         }
-        return "null";
       }
     }
-
-    return "null";
-  };
-
-  const esm = [];
-  const statements = [];
-
+    return 'null'
+  }
+  const esm = []
+  let statements = []
   markdownAST.children.forEach((node) => {
     switch (node.type) {
-      case "mdxjsEsm":
-        esm.push(node.value);
-        break;
-
+      case 'mdxjsEsm':
+        esm.push(node.value)
+        break
       default: {
-        const transformed = transformNode(node);
-
+        const transformed = transformNode(node)
         if (transformed && transformed.isScript) {
-          statements.push(transformed.value);
+          statements.push(transformed.value)
         } else {
-          statements.push(`__items__.push(${transformed})`);
+          statements.push(`__items__.push(${transformed})`)
         }
       }
     }
-  });
+  })
 
-  return { Tags, esm, statements, UsesCreateElement };
-};
+  // Ignore whitespace-only text nodes introduced by remark-rehype
+  statements = statements.filter(n => n !== '__items__.push("\\n")');
+  return { Tags, esm, statements, UsesCreateElement }
+}
