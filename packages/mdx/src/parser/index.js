@@ -10,7 +10,45 @@ import rehypeHighlight from 'rehype-highlight';
 import { VFile } from 'vfile';
 import { matter } from 'vfile-matter';
 
-export async function parseMD(markdown, ...plugins) {
+const mdxNodeTypes = [
+  'mdxjsEsm',
+  'mdxJsxTextElement',
+  'mdxJsxFlowElement',
+  'mdxTextExpression',
+  'mdxFlowExpression',
+  'yaml',
+];
+
+const isPluginOptions = (value) =>
+  value !== null &&
+  typeof value === 'object' &&
+  !Array.isArray(value) &&
+  [
+    'plugins',
+    'remarkPlugins',
+    'rehypePlugins',
+    'remarkRehypeOptions',
+    'useRehypeHighlight',
+  ].some((key) => Object.hasOwn(value, key));
+
+const usePlugins = (processor, plugins = []) => {
+  for (const plugin of plugins) {
+    if (Array.isArray(plugin)) processor.use(...plugin);
+    else processor.use(plugin);
+  }
+};
+
+export async function parseMD(markdown, ...pluginArgs) {
+  const options =
+    pluginArgs.length === 1 && isPluginOptions(pluginArgs[0])
+      ? pluginArgs[0]
+      : { remarkPlugins: pluginArgs };
+  const remarkPlugins = [
+    ...(options.plugins || []),
+    ...(options.remarkPlugins || []),
+  ];
+  const rehypePlugins = options.rehypePlugins || [];
+
   const file = new VFile(markdown);
   matter(file, { strip: true });
 
@@ -19,14 +57,20 @@ export async function parseMD(markdown, ...plugins) {
     .use(remarkGFM)
     .use(remarkFrontmatter, ['yaml'])
     .use(remarkToc)
-    .use(remarkMdx)
-    // .use(remarkRehype, { allowDangerousHtml: true })
-    .use(rehypeHighlight);
+    .use(remarkMdx);
 
-  plugins.forEach(plugin => {
-    if (Array.isArray(plugin)) processor.use(...plugin);
-    else processor.use(plugin);
+  usePlugins(processor, remarkPlugins);
+  processor.use(remarkRehype, {
+    ...options.remarkRehypeOptions,
+    passThrough: [
+      ...new Set([
+        ...mdxNodeTypes,
+        ...(options.remarkRehypeOptions?.passThrough || []),
+      ]),
+    ],
   });
+  if (options.useRehypeHighlight !== false) processor.use(rehypeHighlight);
+  usePlugins(processor, rehypePlugins);
 
   const tree = processor.parse(file);
   const ast = await processor.run(tree, file);

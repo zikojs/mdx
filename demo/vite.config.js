@@ -1,14 +1,17 @@
 import { defineConfig } from "vite";
 import MDX from "@zikojs/vite-plugin-mdx"
 import syntaxHighlightAdapter from '@zikojs/mdx-highlightjs-adapter'
+import rehypeHighlight from 'rehype-highlight'
 export default defineConfig({
     plugins : [
         MDX({
-            syntaxHighlightAdapter,
+            // syntaxHighlightAdapter,
             marker: '.ziko',
             include : ['**/articles/*'],
             plugins:[
-            ]
+            ],
+            // rehypePlugins:[rehypeHighlight]
+        
         })
     ]
 })

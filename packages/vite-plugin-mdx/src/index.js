@@ -4,6 +4,9 @@ import { transpileMD } from '@zikojs/mdx';
 
 export default function ViteMDX({
   plugins,
+  remarkPlugins,
+  rehypePlugins,
+  remarkRehypeOptions,
   syntaxHighlightAdapter = null,
   marker = '',
   include = ['**/*'],
@@ -32,6 +35,9 @@ export default function ViteMDX({
       if (!isMarkdownFile(id)) return;
       const code = await transpileMD(src, {
         plugins,
+        remarkPlugins,
+        rehypePlugins,
+        remarkRehypeOptions,
         syntaxHighlightAdapter,
       });
       return {

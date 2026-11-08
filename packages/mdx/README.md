@@ -23,6 +23,20 @@ export default defineConfig({
 })
 ```
 
+Remark and rehype plugins can be configured independently. Each entry uses
+Unified's plugin format, so options can be passed as a tuple:
+
+```js
+MDX({
+  remarkPlugins: [remarkPlugin, [remarkPluginWithOptions, { option: true }]],
+  rehypePlugins: [rehypePlugin, [rehypePluginWithOptions, { option: true }]],
+})
+```
+
+The existing `plugins` option remains available as an alias for
+`remarkPlugins`. `remarkRehypeOptions` can be used to configure the
+`remark-rehype` conversion.
+
 ## Usage
 
 *Article.mdz :*

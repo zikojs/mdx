@@ -20,9 +20,7 @@ export const processMDAST = (
         return { type: "script", value: node.value };
 
       case "text": {
-        const text = node.value;
-        const escaped = text.replace(/"/g, '\\"');
-        return `"${escaped}"`;
+        return JSON.stringify(node.value);
       }
 
       case "mdxTextExpression":
@@ -84,7 +82,7 @@ export const processMDAST = (
 
       case "inlineCode":
         Tags.add("code");
-        return hyperscript("code", "{}", `"${node.value}"`);
+        return hyperscript("code", "{}", JSON.stringify(node.value));
 
       case "code": {
         Tags.add("pre");
@@ -110,6 +108,60 @@ export const processMDAST = (
             children
           )
         );
+      }
+
+      case "element": {
+        const { tagName, properties = {}, children = [] } = node;
+        if (!tagName) return "null";
+        Tags.add(tagName);
+
+        if (
+          tagName === "pre" &&
+          syntaxHighlightAdapter &&
+          children[0]?.tagName === "code"
+        ) {
+          const codeNode = children[0];
+          const code = codeNode.children
+            .map((child) =>
+              child.type === "text"
+                ? child.value
+                : child.children?.map((text) => text.value || "").join("") || ""
+            )
+            .join("");
+          const classes = codeNode.properties?.className || [];
+          const languageClass = (Array.isArray(classes) ? classes : [classes])
+            .find((name) => name.startsWith("language-"));
+          const language = languageClass?.slice("language-".length);
+          const highlightedCode = syntaxHighlightAdapter.highlight(code, language);
+          const htmlAST = parseDocument(highlightedCode);
+          const highlightedChildren = htmlAST.children
+            .map(transformHTMLNode)
+            .filter(Boolean)
+            .join(", ");
+
+          Tags.add("code").add("span");
+          return hyperscript(
+            "pre",
+            "{}",
+            hyperscript(
+              "code",
+              `{ class: ${JSON.stringify(languageClass || "")} }`,
+              highlightedChildren
+            )
+          );
+        }
+
+        const attrs = Object.entries(properties)
+          .filter(([, value]) => value !== null && value !== undefined && value !== false)
+          .map(([name, value]) => {
+            const propertyName =
+              name === "className" ? "class" : name === "htmlFor" ? "for" : name;
+            const propertyValue = Array.isArray(value) ? value.join(" ") : value;
+            return `${JSON.stringify(propertyName)}: ${JSON.stringify(propertyValue)}`;
+          })
+          .join(", ");
+        const childNodes = children.map(transformNode).join(", ");
+        return hyperscript(tagName, `{${attrs}}`, childNodes);
       }
 
       case "thematicBreak":
