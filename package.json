@@ -2,7 +2,7 @@
   "name": "zikojs-mdx-root",
   "version": "1.0.0",
   "description": "",
-  "private": "true",
+  "private": true,
   "homepage": "https://github.com/zikojs/mdx#readme",
   "bugs": {
     "url": "https://github.com/zikojs/mdx/issues"
